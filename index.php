@@ -1,13 +1,81 @@
 <?php
 
-/*** rapport d'erreur activé ***/
-error_reporting(E_ALL);
+try {
+    $bd = new PDO('sqlite:NFL.db');
+}
+catch (PDOException $exception) {
+    echo 'Connection failed: ' . $exception->getMessage();
+}
 
-/*** path du site constant ***/
-$site_path = realpath(dirname(__FILE__));
-define ('__SITE_PATH', $site_path);
+try {
+    $bd->exec("CREATE TABLE IF NOT EXISTS Utilisateurs(
+                UtilisateurID integer PRIMARY KEY,
+                UtilisateurEmail TEXT,
+                UtilisateurMDP TEXT,
+                UtilisateurNbJetons INTEGER,
+                UtilisateurRole integer);
 
-/*** inclure le fichier init.php ***/
-include 'includes/init.php';
+                CREATE TABLE IF NOT EXISTS Equipes(
+                EquipeID integer PRIMARY KEY,
+                EquipeNom TEXT,
+                EquipeDefaites INTEGER,
+                EquipeVictoires INTEGER,
+                EquipePF INTEGER,
+                EquipePA INTEGER);
+
+                CREATE TABLE IF NOT EXISTS Parties(
+                PartieID integer PRIMARY KEY,
+                PartieNomHote TEXT,
+                PartieNomVisiteur TEXT,
+                PartiePointsHote INTEGER ,
+                PartiePointsVisiteur INTEGER ,
+                ParieDate TEXT,
+                FOREIGN KEY (PartieNomHote) REFERENCES Equipes(EquipeNom),
+                FOREIGN KEY (PartieNomVisiteur) REFERENCES Equipes(EquipeNom));
+
+                CREATE TABLE IF NOT EXISTS Mises(
+                MiseID INTEGER PRIMARY KEY,
+                MiseIDUsager integer,
+                MiseIDPartie integer,
+                MiseJetonGagne INTEGER ,
+                MiseType INTEGER ,
+                MiseDate TEXT,
+                MiseSurHote boolean,
+                FOREIGN KEY (MiseIDUsager) REFERENCES Utilisateurs(UtilisateurID),
+                FOREIGN KEY (MiseIDPartie) REFERENCES Parties(PartieID))");
+}
+catch(PDOException $exception)
+{
+    echo 'connection failed:' . $exception->getMessage();
+}
+
+
+
+
+// Parse URL
+$path = parse_url($_SERVER["REQUEST_URI"])["path"];
+$path = array_filter(explode("/", $path));
+
+// Position of index.php in the PATH url
+$pos = array_search("index.php", $path);
+
+
+// Get the Controller
+if (isset($path[$pos+1])) {
+    $Controller = $path[$pos+1];
+}
+else
+{
+    header("Location:index.php/Login");
+}
+
+// Post ou non
+$post = $_SERVER['REQUEST_METHOD'] === 'POST';
+
+include("Controleur/FacadeVue.php");
+include("Controleur/$Controller.php");
+$control = new $Controller($path, $pos, $post);
+
+
 
 ?>
