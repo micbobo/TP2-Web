@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/PagePrincipale.css">
+    <meta charset="utf-8">
+</head>
+
+<!--OPTION ADMINISTRATEUR-->
+<body>
+<header>
+    <div class="background">
+        <h1>Gérer les cheifous</h1>
+    </div>
+</header>
+
+<!--    Menu d'ajout de membres-->
+<div class="AjoutMembres">
+    <h2>Ajouter un membre</h2>
+    <form action="PagePrincipale.php" method="post">
+        <input class="textbox" type="text" name="txtUsernameAdd" placeholder="Nom du membre">
+        <div class="combobox">
+            <label>Type de membre</label>
+            <select name = 'cmbTypeAjout'>
+                <option value="1">Administrateur</option>
+                <option value="2">Parieur</option>
+            </select>
+        </div>
+        <input class="textbox"type="password" name="txtPasswordAdd" placeholder="Mot de passe"><br><br>
+
+        <input class="button" type="submit" name="btnAddMember" value="Ajouter un membre">
+    </form>
+</div>
+
+<!--    Menu de modification de membres-->
+<div class="ModifMembres">
+    <h2>Modifier un membre</h2>
+
+    <form action="PagePrincipale.php" method="post">
+        <div class="combobox">
+            <label>Nom du membre*</label>
+            <!-- AFFICHER LES UTILISATEURS ICI--><label>AFFICHER LES UTILISATEUS ICI</label>
+        </div>
+        <input id="TextBoxNameModif" class="textbox" type="text" name="txtUsernameModif" placeholder="Nom du membre">
+        <div class="combobox">
+            <label>Type de membre</label>
+            <select id = "cmbTypeModif" name = 'cmbTypeModif'>
+                <option value="1">Administrateur</option>
+                <option value="2">Parieur</option>
+            </select>
+        </div>
+        <input id="TextBoxPassModif" class="textbox"type="password" name="txtPasswordModif" placeholder="Mot de passe"><br><br>
+        <input class="button" type="submit" name="btnModifMember" value="Modifier un membre">
+    </form>
+</div>
+</body>
+</html>

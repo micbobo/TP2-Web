@@ -1,6 +1,6 @@
 <?php
-class Login {
-    function __construct($method,$pos,$post,$bd){
+class VoirParties {
+    function __construct($path,$pos,$post,$bd){
         session_start();
         $this->vue = new FacadeVue();
         if($post){
@@ -28,17 +28,8 @@ class Login {
         $this->Modele = new LoginModele();
     }
 
-    function ConnectUsager($bd)
-    {
+    function ConnectUsager($bd){
         include_once("Modele/Login.php");
-        $this->Modele = new LoginModele('Connection', $bd);
-        if ($_SESSION['UID'] > 0) {
-            if ($_SESSION['URole'] == 0) {
-                $this->vue->ShowContent('VueGererUtilisateurs');
-            } else {
-                $this->vue->ShowContent('VueMises');
-            }
-        }
+        $this->Modele = new LoginModele('Connection',$bd);
     }
 }
-

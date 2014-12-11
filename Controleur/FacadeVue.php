@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 class FacadeVue{
     public function ShowContent($NomPage,$data = null){
         $pageToRender = file_get_contents('Vue/' . $NomPage . '.html');

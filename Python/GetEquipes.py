@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import urllib.request
 import sqlite3
-conn = sqlite3.connect('NFL.db')
+conn = sqlite3.connect('../NFL.db')
 response = urllib.request.urlopen('http://espn.go.com/nfl/standings')
 html = response.read()
 response.close()

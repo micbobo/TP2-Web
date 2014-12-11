@@ -3,7 +3,7 @@ import datetime
 from bs4 import BeautifulSoup
 
 import sqlite3
-conn = sqlite3.connect('NFL.db')
+conn = sqlite3.connect('../NFL.db')
 conn.execute('DELETE FROM Parties')
 
 
@@ -51,7 +51,7 @@ for WeekLoop in range(weekNumber, 18):
             conn.execute('''CREATE TABLE IF NOT EXISTS Parties (PartieID integer PRIMARY KEY,PartieIDHote integer,PartieIDVisiteur integer,PartiePointsHote integer,PartiePointsVisiteur integer,HeureMatch text)''')
 
             matchs = [(IDHote,IDVisiteur,0,0,DateHeure)]
-            conn.executemany('INSERT INTO Parties (PartieIDHote,PartieIDVisiteur,PartiePointsHote,PartiePointsVisiteur,HeureMatch) VALUES (?,?,?,?,?)', matchs)
+            conn.executemany('INSERT INTO Parties (PartieNomHote,PartieNomVisiteur,PartiePointsHote,PartiePointsVisiteur,PartieDate) VALUES (?,?,?,?,?)', matchs)
 
 conn.commit()
 conn.close()
